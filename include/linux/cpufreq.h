@@ -279,6 +279,19 @@ struct cpufreq_driver {
 	bool		boost_supported;
 	bool		boost_enabled;
 	int		(*set_boost)(int state);
+	unsigned int (*getavg)	(struct cpufreq_policy *policy,
+				 unsigned int cpu);
+	int	(*bios_limit)	(int cpu, unsigned int *limit);
+
+	int	(*exit)		(struct cpufreq_policy *policy);
+	int	(*suspend)	(struct cpufreq_policy *policy);
+	int	(*resume)	(struct cpufreq_policy *policy);
+
+	/* sysfs voltage table */
+	ssize_t (*show_volt)	(char *buf);
+	ssize_t (*store_volt)	(const char *buf);
+
+	struct freq_attr	**attr;
 };
 
 /* flags */
