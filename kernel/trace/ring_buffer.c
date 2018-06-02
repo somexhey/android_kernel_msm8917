@@ -4883,9 +4883,9 @@ static __init int test_ringbuffer(void)
 		rb_data[cpu].cnt = cpu;
 		rb_threads[cpu] = kthread_create(rb_test, &rb_data[cpu],
 						 "rbtester/%d", cpu);
-		if (WARN_ON(IS_ERR(rb_threads[cpu]))) {
+		if (WARN_ON(!rb_threads[cpu])) {
 			pr_cont("FAILED\n");
-			ret = PTR_ERR(rb_threads[cpu]);
+			ret = -1;
 			goto out_free;
 		}
 
@@ -4895,9 +4895,9 @@ static __init int test_ringbuffer(void)
 
 	/* Now create the rb hammer! */
 	rb_hammer = kthread_run(rb_hammer_test, NULL, "rbhammer");
-	if (WARN_ON(IS_ERR(rb_hammer))) {
+	if (WARN_ON(!rb_hammer)) {
 		pr_cont("FAILED\n");
-		ret = PTR_ERR(rb_hammer);
+		ret = -1;
 		goto out_free;
 	}
 
