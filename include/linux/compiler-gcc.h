@@ -146,8 +146,6 @@
 #define __must_check		__attribute__((warn_unused_result))
 #endif
 
-#if GCC_VERSION >= 40000
-
 /* GCC 4.1.[01] miscompiles __weak */
 #ifdef __KERNEL__
 # if GCC_VERSION >= 40100 &&  GCC_VERSION <= 40101
